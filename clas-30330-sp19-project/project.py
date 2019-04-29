@@ -20,6 +20,7 @@ def usage(exit_code=0):
     print('''Usage: {} [-f filename -p PREFIX -l]
     -f FILENAME Load in words from file (Default: \'word_lists.csv\')
     -p PREFIX   Get all words beginning with prefix
+    -c CONTAINS Get words containing substring (to be: word matching)
     -l          List all words'''.format(os.path.basename(sys.argv[0])))
     sys.exit(exit_code)
 
@@ -50,6 +51,16 @@ def prefix(word_list):
 
     return sorted(new_word_list, key=lambda w: w.term)
 
+def contains(word_list):
+    new_word_list = []
+
+    for word in word_list:
+        if CONTAINS.lower() in word.term.lower():
+            new_word_list.append(word)
+
+    return sorted(new_word_list, key=lambda w: w.term)
+
+
 if __name__ == "__main__":
 
     while ARGUMENTS and ARGUMENTS[0].startswith('-') and len(ARGUMENTS[0]) > 1:
@@ -60,6 +71,8 @@ if __name__ == "__main__":
             LIST_ALL = True
         elif arg == '-p':
             PREFIX = ARGUMENTS.pop(0)
+        elif arg == '-c':
+            CONTAINS = ARGUMENTS.pop(0)
         elif arg == '-h':
             usage(0)
         else:
@@ -69,6 +82,9 @@ if __name__ == "__main__":
     
     if PREFIX:
         word_list = prefix(word_list)
+        list_all(word_list)
+    elif CONTAINS:
+        word_list = contains(word_list)
         list_all(word_list)
     elif LIST_ALL:
         list_all(word_list)
