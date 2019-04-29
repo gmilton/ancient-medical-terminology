@@ -125,7 +125,6 @@ if __name__ == "__main__":
         word_list = prefix(word_list)
     if CONTAINS:
         word_list = contains(word_list)
-        list_all(word_list)
     if MEANING:
         word_list = meaning(word_list)
     if POS:
