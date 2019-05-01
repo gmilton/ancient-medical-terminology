@@ -70,7 +70,7 @@ def list_all(word_list):
     for i, w in enumerate(word_list):
         print("Term {}: {}\nDefinition: {}\nGreek/Latin: {}\nPOS: {}\n\n".format(i + 1, w.term, w.definition, w.greek_latin, w.pos))
 
-    print("Grace 'G$' Milton's Project for CLAS 30330")
+#    print("Grace 'G$' Milton's Project for CLAS 30330")
 
 def prefix(word_list):
     new_word_list = []
