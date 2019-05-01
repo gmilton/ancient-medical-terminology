@@ -26,7 +26,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  return render_template('project.html')
+  return render_template('index.html')
 
 @app.route('/my-link/')
 def my_link():
@@ -179,7 +179,7 @@ def find_next_wr(wr_dict, term, i):
 
 
 
-
+'''
 if __name__ == "__main__":
     app.run(debug=True)
 
@@ -232,3 +232,4 @@ if __name__ == "__main__":
 
     if LIST_ALL:
         list_all(word_list)
+'''
