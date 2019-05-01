@@ -135,7 +135,6 @@ def combine_wrs(wr_dict, wr_list, term):
     for wr in wr_dict[i]:
         node = Node(wr)
         possible_parses.append(Tree(node))
-        print("INDEX {}    {} - {}".format(i, wr.term, wr.definition))
     for branch in possible_parses:
         j = i
         node = branch.root
@@ -144,7 +143,6 @@ def combine_wrs(wr_dict, wr_list, term):
             node, j = frontier.pop(0)
             k = j + len(node.word.term)
             j = find_next_wr(wr_dict, term, k)
-            print("NEXT INDEX = {}".format(j))
             while j and j < len(term):
                 for wr in wr_dict[j]:
                     child = Node(wr)
@@ -153,6 +151,7 @@ def combine_wrs(wr_dict, wr_list, term):
                 j += 1
     for p in possible_parses:
         print(p.root)
+    return possible_parses
 
 def find_next_wr(wr_dict, term, i):
     while i not in wr_dict and i < len(term):
@@ -210,7 +209,8 @@ if __name__ == "__main__":
         print("TERM: {}".format(term))
         for wr in wr_list:
             print("    {} - {}".format(wr.term, wr.definition))
-        combine_wrs(wr_dict, wr_list, term)
+        print("\n")
+        possible_parses = combine_wrs(wr_dict, wr_list, term)
 
     if LIST_ALL:
         list_all(word_list)
