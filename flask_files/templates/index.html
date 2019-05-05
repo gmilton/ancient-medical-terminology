@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang=en-UK>
+<head>
+  <title>Ancient Medical Terminology</title>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Lobster|Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta charset="UTF-8">
+  <meta name="author" content="Grace Milton">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body="home">
+  <ul id="nav">
+<!--    <li><a class="active" href="index.html#home">Home</a></li>-->
+    <li style="float:left"><a href="#" class="alpha alpha-a" value="a">A</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-b" value="b">B</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-c" value="c">C</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-d" value="d">D</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-e" value="e">E</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-f" value="f">F</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-g" value="g">G</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-h" value="h">H</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-i" value="i">I</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-j" value="j">J</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-k" value="k">K</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-l" value="l">L</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-m" value="m">M</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-n" value="n">N</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-o" value="o">O</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-p" value="p">P</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-q" value="q">Q</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-r" value="r">R</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-s" value="s">S</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-t" value="t">T</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-u" value="u">U</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-v" value="v">V</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-w" value="w">W</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-x" value="x">X</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-y" value="y">Y</a></li>
+    <li style="float:left"><a href="#" class="alpha alpha-z" value="z">Z</a></li>
+    <li style="float:left"><a href="#" class="pos pos-wr" value="wr">Word Root</a></li>  
+    <li style="float:left"><a href="#" class="pos pos-pre" value="pre">Prefix</a></li>  
+    <li style="float:left"><a href="#" class="pos pos-suf" value="suf">Suffix</a></li>  
+    <li style="float:left"><a href="#" class="pos pos-position" value="position">Position</a></li>  
+    <li style="float:left"><a href="#" class="pos pos-ba" value="ba">Body Axis</a></li>  
+  </ul>
+  <br/><br/><br/><br/>
+  <h1 id="name"><abbr title="G$">Greek and Latin Medical Terminology 'R' Us</abbr></h1>
+  <p>Find a term, find a meaning, or parse through medical lingo.</p>
+  <br>
+  <form class="example">
+    <input type="text" placeholder="Search.." name="search" id="search_bar">
+    <br/>
+    <!--<a href="/terms" id="terms"><button class='btn btn-terms' value="terms">Search Terms</button></a>
+    <a href="/definitions" id="definitions"><button class='btn btn-definitions' value='definitions'>Search Definitions</button></a>-->
+    <button class='btn btn-terms' value="terms">Search Terms</button>
+    <button class='btn btn-definitions' value='definitions'>Search Definitions</button>
+    <button class='parse' value='parse'>Parse Term</button>
+  </form>
+  <div id="results"></div>
+  <br><br><br>
+  <!--<br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>
+  <br><br><br>-->
+</body>
+
+<script>
+
+function Label(){
+    this.item = null;
+    this.createLabel= function(text, id, type){
+        this.id = id;
+        var label = document.createElement(type);
+        label.setAttribute("id",id);
+        var textLabel = document.createTextNode(text);
+        label.appendChild(textLabel);
+        this.item = label;
+    }
+    this.setText = function(text){
+        this.item.innerHTML = text;
+    }
+    this.addToDocument = function(){
+        document.getElementById("results").appendChild(this.item);
+    }
+}
+
+// Only run what comes next *after* the page has loaded
+addEventListener("DOMContentLoaded", function() {
+  // Grab all of the elements with a class of command
+  // (which all of the buttons we just created have)
+  var searchButtons = document.querySelectorAll(".btn");
+  for (var i=0, l=searchButtons.length; i<l; i++) {
+    var button = searchButtons[i];
+    // For each button, listen for the "click" event
+    button.addEventListener("click", function(e) {
+      // When a click happens, stop the button
+      // from submitting our form (if we have one)
+      e.preventDefault();
+
+      var clickedButton = e.target;
+      var search = "search;" + clickedButton.value;
+      search += ";"
+      search += document.getElementById("search_bar").value
+      console.log(document.getElementById("search_bar").name)
+      console.log(document.getElementById("search_bar").value)
+
+      // Now we need to send the data to our server
+      // without reloading the page - this is the domain of
+      // AJAX (Asynchronous JavaScript And XML)
+      // We will create a new request object
+      // and set up a handler for the response
+      var request = new XMLHttpRequest();
+      request.onload = function() {
+          prev_results = document.getElementById("results");
+          while (prev_results.firstChild) {
+             prev_results.removeChild(prev_results.firstChild);
+          }
+          // We could do more interesting things with the response
+          // or, we could ignore it entirely
+          console.log(request.responseText);
+          console.log(document.getElementById("search_bar").name);
+          console.log(document.getElementById("search_bar").value);
+          termdata = JSON.parse(request.responseText);
+          var terms = termdata['terms'];
+          for (i = 0; i < terms.length; i++) {
+              var termLabel = new Label();
+              termLabel.createLabel(terms[i]['term']+" - "+terms[i]['definition']+" - "+terms[i]['greek_latin']+" - "+terms[i]['pos'], terms[i]['term']+"Label", "p");
+              termLabel.addToDocument();
+          }
+          //alert(request.responseText);
+      };
+      // We point the request at the appropriate command
+      request.open("GET", "/" + search, true);
+      // and then we send it off
+      request.send();
+    });
+  }
+}, true);
+
+// Only run what comes next *after* the page has loaded
+addEventListener("DOMContentLoaded", function() {
+  // Grab all of the elements with a class of command
+  // (which all of the buttons we just created have)
+  var alphabet = document.querySelectorAll(".alpha");
+  console.log(alphabet.length)
+  for (var i=0, l=alphabet.length; i<l; i++) {
+    var letter = alphabet[i];
+    // For each button, listen for the "click" event
+    letter.addEventListener("click", function(e) {
+      // When a click happens, stop the button
+      // from submitting our form (if we have one)
+      e.preventDefault();
+
+      var clickedLetter = e.target;
+      var prefix = "prefix;" + clickedLetter.innerHTML;
+
+      // Now we need to send the data to our server
+      // without reloading the page - this is the domain of
+      // AJAX (Asynchronous JavaScript And XML)
+      // We will create a new request object
+      // and set up a handler for the response
+      var request = new XMLHttpRequest();
+      request.onload = function() {
+          prev_results = document.getElementById("results");
+          while (prev_results.firstChild) {
+             prev_results.removeChild(prev_results.firstChild);
+          }
+          // We could do more interesting things with the response
+          // or, we could ignore it entirely
+          termdata = JSON.parse(request.responseText);
+          var terms = termdata['terms'];
+          for (i = 0; i < terms.length; i++) {
+              var termLabel = new Label();
+              termLabel.createLabel(terms[i]['term']+" - "+terms[i]['definition']+" - "+terms[i]['greek_latin']+" - "+terms[i]['pos'], terms[i]['term']+"Label", "p");
+              termLabel.addToDocument();
+          }
+          //alert(request.responseText);
+      };
+      // We point the request at the appropriate command
+      request.open("GET", "/" + prefix, true);
+      // and then we send it off
+      request.send();
+    });
+  }
+}, true);
+
+// Only run what comes next *after* the page has loaded
+addEventListener("DOMContentLoaded", function() {
+  // Grab all of the elements with a class of command
+  // (which all of the buttons we just created have)
+  var pos = document.querySelectorAll(".pos");
+  for (var i=0, l=pos.length; i<l; i++) {
+    var search = pos[i];
+    // For each button, listen for the "click" event
+    search.addEventListener("click", function(e) {
+      // When a click happens, stop the button
+      // from submitting our form (if we have one)
+      e.preventDefault();
+
+      var clickedPOS = e.target;
+      console.log(clickedPOS.innerHTML);
+      var search = "pos;" + clickedPOS.innerHTML;
+
+      // Now we need to send the data to our server
+      // without reloading the page - this is the domain of
+      // AJAX (Asynchronous JavaScript And XML)
+      // We will create a new request object
+      // and set up a handler for the response
+      var request = new XMLHttpRequest();
+      request.onload = function() {
+          prev_results = document.getElementById("results");
+          while (prev_results.firstChild) {
+             prev_results.removeChild(prev_results.firstChild);
+          }
+          // We could do more interesting things with the response
+          // or, we could ignore it entirely
+          termdata = JSON.parse(request.responseText);
+          var terms = termdata['terms'];
+          for (i = 0; i < terms.length; i++) {
+              var termLabel = new Label();
+              termLabel.createLabel(terms[i]['term']+" - "+terms[i]['definition']+" - "+terms[i]['greek_latin']+" - "+terms[i]['pos'], terms[i]['term']+"Label", "p");
+              termLabel.addToDocument();
+          }
+          //alert(request.responseText);
+      };
+      // We point the request at the appropriate command
+      request.open("GET", "/" + search, true);
+      // and then we send it off
+      request.send();
+    });
+  }
+}, true);
+
+// Only run what comes next *after* the page has loaded
+addEventListener("DOMContentLoaded", function() {
+  // Grab all of the elements with a class of command
+  // (which all of the buttons we just created have)
+  var parseButtons = document.querySelectorAll(".parse");
+  for (var i=0, l=parseButtons.length; i<l; i++) {
+    var parse_term = parseButtons[i];
+    // For each button, listen for the "click" event
+    parse_term.addEventListener("click", function(e) {
+      // When a click happens, stop the button
+      // from submitting our form (if we have one)
+      e.preventDefault();
+
+      var clickedParse = e.target;
+      var parse = "parse;" + document.getElementById("search_bar").value;
+
+      // Now we need to send the data to our server
+      // without reloading the page - this is the domain of
+      // AJAX (Asynchronous JavaScript And XML)
+      // We will create a new request object
+      // and set up a handler for the response
+      var request = new XMLHttpRequest();
+      request.onload = function() {
+          prev_results = document.getElementById("results");
+          while (prev_results.firstChild) {
+             prev_results.removeChild(prev_results.firstChild);
+          }
+          // We could do more interesting things with the response
+          // or, we could ignore it entirely
+          termdata = JSON.parse(request.responseText);
+          var firstLabel = new Label();
+          firstLabel.createLabel("TERM:  "+document.getElementById("search_bar").value, "firstLabel", "h2");
+          firstLabel.addToDocument();
+          var terms = termdata['terms'];
+          var parses = termdata['parses'];
+          for (i = 0; i < terms.length; i++) {
+              var termLabel = new Label();
+              termLabel.createLabel(terms[i]['term']+" - "+terms[i]['definition']+" - "+terms[i]['greek_latin']+" - "+terms[i]['pos'], terms[i]['term']+"Label", "p");
+              termLabel.addToDocument();
+          }
+          for (i = 0; i < parses.length; i++) {
+              var parseLabel = new Label();
+              nTabs = parseInt(parses[i][0]);
+              term = parses[i].slice(2, parses[i].length);
+              console.log(term);
+              parseLabel.createLabel("a"*nTabs + term, "parseLabel"+i.toString(), "p");
+              parseLabel.addToDocument();
+          }
+          console.log(parses);
+          //alert(request.responseText);
+      };
+      // We point the request at the appropriate command
+      request.open("GET", "/" + parse, true);
+      // and then we send it off
+      request.send();
+    });
+  }
+}, true);
+
+</script>
+</html>
